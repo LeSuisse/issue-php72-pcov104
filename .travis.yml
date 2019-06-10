@@ -1,0 +1,36 @@
+language: php
+
+php:
+  - 7.2
+  - 7.3
+  - 7.4snapshot
+
+env:
+  matrix:
+    - PCOV_VERSION="v1.0.3"
+    - PCOV_VERSION="v1.0.4"
+
+before_install:
+  - git clone --depth=1 https://github.com/Enalean/tuleap.git
+
+install:
+  - cd tuleap
+  - make composer
+
+before_script:
+  - |
+     echo > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/xdebug.ini
+     git clone --single-branch --branch=$PCOV_VERSION --depth=1 https://github.com/krakjoe/pcov
+     cd pcov
+     phpize
+     ./configure
+     make clean install
+     echo "extension=pcov.so" > $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/etc/conf.d/pcov.ini
+     cd $TRAVIS_BUILD_DIR
+
+script:
+  - cd tuleap
+  - php -d pcov.directory=. src/vendor/bin/phpunit --debug --config=tests/phpunit/phpunit.xml --coverage-clover=coverage.xml tests/phpunit/common/Include/
+
+notifications:
+  email: false

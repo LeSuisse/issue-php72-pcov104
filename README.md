@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/LeSuisse/issue-php72-pcov104.svg?branch=master)](https://travis-ci.com/LeSuisse/issue-php72-pcov104)
