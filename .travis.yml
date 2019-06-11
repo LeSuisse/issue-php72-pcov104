@@ -9,6 +9,7 @@ env:
   matrix:
     - PCOV_VERSION="v1.0.3"
     - PCOV_VERSION="v1.0.4"
+    - PCOV_VERSION="develop"
 
 before_install:
   - git clone --depth=1 https://github.com/Enalean/tuleap.git
